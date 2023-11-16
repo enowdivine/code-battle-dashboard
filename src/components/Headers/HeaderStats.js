@@ -1,10 +1,33 @@
-import React from "react";
-
-// components
-
+import React, { useEffect } from "react";
+import { users } from "redux/reducers/usersReducer";
+import { floodData } from "redux/reducers/floodReducer";
+import { useDispatch, useSelector } from "react-redux";
 import CardStats from "components/Cards/CardStats.js";
 
 export default function HeaderStats() {
+  const dispatch = useDispatch();
+  const allUsers = useSelector((state) => state.users.users);
+  const allData = useSelector((state) => state.flood.data);
+
+  const getUsers = () => {
+    dispatch(users())
+      .then(() => {})
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+  const getfloodData = () => {
+    dispatch(floodData())
+      .then(() => {})
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  useEffect(() => {
+    getUsers();
+    getfloodData();
+  }, []);
   return (
     <>
       {/* Header */}
@@ -15,24 +38,30 @@ export default function HeaderStats() {
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="TRAFFIC"
-                  statTitle="350,897"
+                  statSubtitle="ALL USERS"
+                  statTitle={`${
+                    allUsers && allUsers.length > 0
+                      ? `${allUsers.length}`
+                      : "--"
+                  }`}
                   statArrow="up"
                   statPercent="3.48"
                   statPercentColor="text-emerald-500"
-                  statDescripiron="Since last month"
-                  statIconName="far fa-chart-bar"
+                  statDescripiron="All Time"
+                  statIconName="fas fa-users"
                   statIconColor="bg-red-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="NEW USERS"
-                  statTitle="2,356"
+                  statSubtitle="SEA LEVEL DATA"
+                  statTitle={`${
+                    allData && allData.length > 0 ? `${allData.length}` : "--"
+                  }`}
                   statArrow="down"
                   statPercent="3.48"
                   statPercentColor="text-red-500"
-                  statDescripiron="Since last week"
+                  statDescripiron="All Time"
                   statIconName="fas fa-chart-pie"
                   statIconColor="bg-orange-500"
                 />
@@ -45,7 +74,7 @@ export default function HeaderStats() {
                   statPercent="1.10"
                   statPercentColor="text-orange-500"
                   statDescripiron="Since yesterday"
-                  statIconName="fas fa-users"
+                  statIconName="far fa-chart-bar"
                   statIconColor="bg-pink-500"
                 />
               </div>

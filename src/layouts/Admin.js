@@ -14,6 +14,9 @@ import Dashboard from "views/admin/Dashboard.js";
 import Maps from "views/admin/Maps.js";
 import Settings from "views/admin/Settings.js";
 import Tables from "views/admin/Tables.js";
+import Users from "views/admin/Users.js";
+import RainFall from "views/admin/RainFall";
+import Earthquake from "views/admin/Earthquake";
 
 export default function Admin() {
   return (
@@ -29,6 +32,9 @@ export default function Admin() {
             <Route path="/admin/maps" exact component={Maps} />
             <Route path="/admin/settings" exact component={Settings} />
             <Route path="/admin/tables" exact component={Tables} />
+            <Route path="/admin/users" exact component={Users} />
+            <Route path="/admin/rainfall" exact component={RainFall} />
+            <Route path="/admin/earthquake" exact component={Earthquake} />
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
           <FooterAdmin />
